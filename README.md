@@ -1,10 +1,3 @@
-# ClearView Take-Home Test
-
-## Notice of Confidentiality
-This take-home test, including attachments, is confidential and only for the sole use of the intended recipient. Any disclosure, copying, sharing to the public, or distribution of the contents is prohibited.
-
----
-
 ## Data Engineering
 
 ### 1. Introductions to Available Files (Each Tab is a Separate File):
