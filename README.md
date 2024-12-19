@@ -1,93 +1,84 @@
+# Data Engineering and Modeling Task
+
+---
+
 ## Data Engineering
 
-### 1. Introductions to Available Files (Each Tab is a Separate File):
-#### a) **Patient**: Patient-level database with patient demographic info.
-- **Patient_ID**: Anonymous patient identifier
-- **Gender**: The gender of the patient  
+### 1. Overview of Available Data Files:
+#### a) **Patient**: Contains demographic information for individuals.
+- **Patient_ID**: Anonymous unique identifier for each individual.
+- **Gender**: Gender of the individual.  
   - F = Female  
   - M = Male  
-- **Birth_year**: The birth year of the patient
+- **Birth_year**: The year of birth for the individual.
 
-#### b) **Diagnosis**: Contains the dates and types of ICD (diagnosis) codes received by patients.
-- **Patient_ID**: Anonymous patient identifier
-- **Date_of_service**: Date of service for the diagnosis
-- **Diagnosis_code**: ICD code patient received
-- **Diagnosis_code_description**: Description of ICD code
+#### b) **Diagnosis**: Includes diagnosis data for individuals.
+- **Patient_ID**: Anonymous unique identifier for each individual.
+- **Date_of_service**: Date when the diagnosis was recorded.
+- **Diagnosis_code**: Medical code associated with the diagnosis.
+- **Diagnosis_code_description**: Description of the medical diagnosis.
 
-#### c) **Pharmacy**: Contains the dates and days of supply of drugs prescribed to patients.
-- **Patient_ID**: Anonymous patient identifier
-- **Date_of_service**: Date of service (date prescription filled)
-- **NDC**: NDC Code for the drug
-- **Days_Supply**: Days of supply for the prescription
-- **Brand_name**: Brand name associated with the NDC
-- **Generic_name**: Generic name associated with the NDC
+#### c) **Pharmacy**: Contains prescription details.
+- **Patient_ID**: Anonymous unique identifier for each individual.
+- **Date_of_service**: Date when the prescription was filled.
+- **NDC**: Code representing the prescribed drug.
+- **Days_Supply**: Number of days the prescription covers.
+- **Brand_name**: Brand name of the prescribed drug.
+- **Generic_name**: Generic name of the prescribed drug.
 
 ---
 
 ### 2. Questions:
-#### a) How many patients have at least two diagnosis (Dx) claims, which can be either the same or different ICD-10 codes, with at least 30 days apart between them (not necessarily consecutive), for any of the following diagnosis codes within the calendar year 2023 (1/1/2023 - 12/31/2023)?
-- ICD-10 code: N186, N184
+#### a) Determine the number of individuals with at least two recorded diagnosis claims, spaced at least 30 days apart, for specific medical codes within a given time period.
+- Relevant medical codes: [Code_1], [Code_2].
 
-#### b) For patients in **a)**, what is the distribution of gender? How many male patients are aged >= 45 in 2023?
+#### b) For the individuals identified in **a)**, determine the gender distribution and calculate the number of males aged >= 45 during the same time period.
 
-#### c) For the patients identified in **a)**, apply the washout criteria by checking if they have at least one diagnosis (Dx) claim or pharmacy (Rx) claim any time before 6 months prior to the beginning of the study period (1/1/2023). Output the number of patients who meet these criteria.
-- Note: 6 months can be calculated as 6*30 = 180 days.
+#### c) Apply a "washout" criterion for the individuals identified in **a)** by checking for any diagnosis or prescription claims recorded at least 6 months prior to the specified study start date. Provide the number of individuals meeting these criteria.
 
-#### d) For patients in **c)**, find the count and percentage of patients who used each of the following drugs within the calendar year 2023 (1/1/2023 - 12/31/2023):
-- Drugs: FUROSEMIDE, LISINOPRIL, FARXIGA, ENTRESTO
-- Output the patient counts by drug brands (Use **BRAND_NAME** in the Pharmacy table).
-
----
-
-### 3. Requirements:
-The solution should include:
-- Result databases
-- Code (must be in SQL or SAS)
+#### d) For individuals meeting the criteria in **c)**, calculate the count and percentage of those using specific drugs during the specified time period:
+- Drugs of interest: Drug_A, Drug_B, Drug_C, Drug_D.
+- Include results grouped by **Brand_name**.
 
 ---
 
-## Modeling
+### 3. Deliverables:
+- Result datasets.
+- Code implementation in either SQL or SAS.
+
+---
+
+## Modeling Task
 
 ### 1. Problem Statement:
-The client has a product already launched in the market and sent a survey to physicians to understand why they would or would not use the product. The aim is to predict physicians' treatment decisions based on the survey responses:
-- **Current User**: Physicians currently treating patients with this product
-- **Future User**: Physicians planning to treat patients with this product in the future
-- **Never Use**: Physicians who will never use this product
+A client has launched a product and collected survey responses from relevant professionals to understand their decision-making processes. The goal is to analyze survey data to classify professionals based on their treatment decisions:
+- **Current User**: Actively using the product.
+- **Future User**: Planning to use the product in the future.
+- **Non-User**: Do not intend to use the product.
 
 #### Data Description:
-- Each row represents one physician response.
-- Columns include:
-  - Basic information about physicians (e.g., location, number of patients treated).
-  - Physicians’ sentiments towards product attributes (e.g., importance of product safety, patient age).
-  - Familiarity with competitors (e.g., Competitor A, Competitor B).
+- Each row represents an individual survey response.
+- Includes basic demographic and professional details, as well as attitudes toward product attributes and familiarity with competing products.
 
-#### Familiarity of Competitor Columns:
-- **1**: I have never heard of this product.
-- **2**: I am somewhat familiar with this product.
-- **3**: I am familiar with this product.
-- **4**: I am quite familiar with this product.
-- **5**: I am very familiar with this product.
-
-#### Attitude Columns:
-- **1**: Not at all influential
-- **2**: Slightly influential
-- **3**: Moderately influential
-- **4**: Very influential
-- **5**: Extremely influential
+#### Column Details:
+- **Familiarity with Competitors**: Scale of 1 to 5.
+  - 1: Unaware of the competitor.
+  - 5: Very familiar with the competitor.
+- **Attitudes Toward Product Attributes**: Scale of 1 to 5.
+  - 1: Not at all influential.
+  - 5: Extremely influential.
 
 ---
 
 ### 2. Task:
-Extract 1-3 business rules per treatment decision to classify physicians into **Current User**, **Future User**, or **Never Use**. For example:
-- **Example Rule**: Physicians who are Epileptologists and very familiar with Competitor A are likely to be Future Users.
+Develop 1-3 business rules per treatment decision category using data analysis and machine learning methods. For example:
+- **Example Rule**: Professionals who specialize in a specific area and are very familiar with Competitor_A are likely to be **Future Users**.
 
 #### Deliverables:
-1. Code to explore the data and discover the rules.
-2. A general description of the approach (1-2 sentences; must use at least one machine learning model).
-3. Rules for physician treatment decision classification (bullet points).
-4. Confusion matrix and interpretation of the metric result.
-5. A layman summary for the client:
-   - Include interpretation, sample size, and accuracy/importance for each rule.
-   - Example: *The first rule, which is "XXX are likely to be Current Users," applies to 70 physicians (47% of all physicians). Out of these 70 physicians, 70% were correctly classified as Current Users.*
-
----
+1. Code for data exploration and rule discovery.
+2. Brief description of the methodology (1-2 sentences, including at least one machine learning model).
+3. Classification rules in bullet points.
+4. Confusion matrix with interpretation of results.
+5. Layman summary of findings:
+   - Include interpretation, sample size, and accuracy for each rule.
+   - Example: "The first rule, which is 'Professionals with [specific criteria] are likely to be **Current Users**,' applies to X individuals (Y% of total). Of these, Z% were correctly classified as **Current Users**."
